@@ -1,0 +1,177 @@
+{
+ "seed": 1304,
+ "predictions": {
+  "ml_f1": {
+   "text": "F1 ~ 0,7, precision cao hơn recall vì mô hình tránh chặn nhầm tin ham",
+   "time": "17:36:07"
+  },
+  "ml_lr": {
+   "text": "lr=0.001 thì mô hình học rất chậm, loss giảm từ từ; lr=0.5 thì mô hình hội tụ tốt, loss giảm nhanh; lr=50 thì learning rate quá lớn, loss giao động mạnh, mô hình không hội tụ",
+   "time": "17:36:15"
+  },
+  "dl_curve": {
+   "text": "(1)val loss không giảm mãi (2)MLP có thể đạt F1 cao hơn",
+   "time": "17:36:37"
+  },
+  "dl_relu": {
+   "text": "tương đương với mô hình tuyến tính đơn thuần, F1 sẽ giảm vì mất phi tuyến trong dữ liệu, khả năng phân loại giảm",
+   "time": "17:36:48"
+  },
+  "emb_search": {
+   "text": "kết quả gần nhất là ham",
+   "time": "17:39:33"
+  },
+  "emb_tricky": {
+   "text": "phần 3b sẽ đúng nhiều hơn",
+   "time": "17:41:17"
+  },
+  "llm_models": {
+   "text": "1. dự đoán gpt-6.1-terra có F1 cao hơn, chênh 10%, 2. tùy vào giá  API, chắc 1,5 lần trở lên, 3. chưa chắc",
+   "time": "17:41:19"
+  },
+  "tradeoff": {
+   "text": "trên đường Pareto là Embedding 3b, LLM nhỏ zero-shot và few-shot, LLM lớn, bên phải vạch là LLM zeroshot và fewshot, Embedding 3b cũng có khả năng",
+   "time": "17:44:11"
+  },
+  "llm_fewshot": {
+   "text": "F1 tăng, chi phí tăng 2-4 lần",
+   "time": "17:46:21"
+  }
+ },
+ "checks": {
+  "1.1 vectorize": true,
+  "1.2 sigmoid / predict_proba": true,
+  "1.3 train_logreg": true,
+  "1.4 metrics": true,
+  "2.1 build_mlp": true,
+  "2.2 train_mlp": true,
+  "3.1–3.2 cosine / top_k_similar": true,
+  "3.3 knn_predict": true,
+  "4.2–4.3 prompt / parse_label": true,
+  "4.1 + 4.4 call_openai / llm_classify_batch": true
+ },
+ "experiments": [
+  {
+   "key": "ml_f1",
+   "time": "17:36:07"
+  },
+  {
+   "key": "ml_lr",
+   "time": "17:36:15"
+  },
+  {
+   "key": "dl_curve",
+   "time": "17:36:37"
+  },
+  {
+   "key": "dl_relu",
+   "time": "17:36:48"
+  },
+  {
+   "key": "emb_search",
+   "time": "17:39:33"
+  },
+  {
+   "key": "emb_tricky",
+   "time": "17:41:17"
+  },
+  {
+   "key": "llm_models",
+   "time": "17:41:19"
+  },
+  {
+   "key": "llm_models",
+   "time": "17:44:24"
+  },
+  {
+   "key": "llm_models",
+   "time": "17:47:24"
+  },
+  {
+   "key": "llm_models",
+   "time": "17:48:34"
+  },
+  {
+   "key": "llm_models",
+   "time": "17:50:48"
+  },
+  {
+   "key": "llm_models",
+   "time": "18:01:11"
+  }
+ ],
+ "results": {
+  "1. BoW + LogReg (tự code)": {
+   "accuracy": 0.9780645161290322,
+   "precision": 1.0,
+   "recall": 0.8411214953271028,
+   "f1": 0.9137055837563453,
+   "f1_SUB": 0.888888888888889,
+   "train_s": 7.414739296000334,
+   "msg_per_s": 31697.84841967053,
+   "p50_ms": 0.06298649987002136,
+   "p95_ms": 0.865331100430917,
+   "usd_per_1k": 0.0
+  },
+  "2. BoW + MLP (deep learning)": {
+   "accuracy": 0.9819354838709677,
+   "precision": 0.9696969696969697,
+   "recall": 0.897196261682243,
+   "f1": 0.9320388349514562,
+   "f1_SUB": 0.9743589743589743,
+   "train_s": 11.396166765998714,
+   "msg_per_s": 19266.138131716525,
+   "p50_ms": 0.34426749971316895,
+   "p95_ms": 0.6084487500629621,
+   "usd_per_1k": 0.0
+  },
+  "3a. Encoder (MiniLM) + kNN": {
+   "accuracy": 0.9870967741935484,
+   "precision": 0.9292035398230089,
+   "recall": 0.9813084112149533,
+   "f1": 0.9545454545454545,
+   "f1_SUB": 0.9743589743589743,
+   "train_s": 100.02060643200093,
+   "msg_per_s": 20.3298157273304,
+   "p50_ms": 55.25262949959142,
+   "p95_ms": 70.06253249946893,
+   "usd_per_1k": 0.0
+  },
+  "3b. Encoder (MiniLM) + LogReg": {
+   "accuracy": 0.9935483870967742,
+   "precision": 0.9903846153846154,
+   "recall": 0.9626168224299065,
+   "f1": 0.976303317535545,
+   "f1_SUB": 1.0,
+   "train_s": 100.70287269400069,
+   "msg_per_s": 26.64886374022776,
+   "p50_ms": 47.319151000010606,
+   "p95_ms": 60.547133098953026,
+   "usd_per_1k": 0.0
+  },
+  "3c. Encoder (MiniLM) + MLP head": {
+   "accuracy": 0.9883870967741936,
+   "precision": 0.9803921568627451,
+   "recall": 0.9345794392523364,
+   "f1": 0.9569377990430622,
+   "f1_SUB": 0.9743589743589743,
+   "train_s": 101.55781064900111,
+   "msg_per_s": 26.681404154137386,
+   "p50_ms": 30.71223700135306,
+   "p95_ms": 38.878702849524416,
+   "usd_per_1k": 0.0
+  },
+  "4a. LLM nhỏ zero-shot": {
+   "accuracy": 0.95,
+   "precision": 0.95,
+   "recall": 0.95,
+   "f1": 0.9500000000000001,
+   "f1_SUB": 0.9500000000000001,
+   "train_s": 0.0,
+   "msg_per_s": 1.5252166680233785,
+   "p50_ms": 570.6859624988283,
+   "p95_ms": 992.6136270503774,
+   "usd_per_1k": 0.022063333333333338
+  }
+ }
+}
